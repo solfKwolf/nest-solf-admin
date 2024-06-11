@@ -9,6 +9,13 @@ import { UserModule } from './module/system/user/user.module';
 import { JwtAuthGuard } from 'src/common/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './common/guards/roles.guard';
+import { AxiosModule } from './module/axios/axios.module';
+import { MenuModule } from './module/system/menu/menu.module';
+import { RoleModule } from './module/system/role/role.module';
+import { DeptModule } from './module/system/dept/dept.module';
+import { LoginlogModule } from './module/monitor/loginlog/loginlog.module';
+import { RedisClientOptions } from '@liaoliaots/nestjs-redis';
+import { RedisModule } from './module/redis/redis.module';
 
 @Global()
 @Module({
@@ -34,9 +41,30 @@ import { RolesGuard } from './common/guards/roles.guard';
         } as TypeOrmModuleOptions;
       },
     }),
+    // redis
+    RedisModule.forRootAsync(
+      {
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => {
+          return {
+            closeClient: true,
+            readyLog: true,
+            errorLog: true,
+            config: config.get<RedisClientOptions>('redis'),
+          };
+        },
+      },
+      true,
+    ),
     // 模块
     UserModule,
     MainModule,
+    AxiosModule,
+    RoleModule,
+    DeptModule,
+    MenuModule,
+    LoginlogModule,
   ],
   controllers: [AppController],
   providers: [
