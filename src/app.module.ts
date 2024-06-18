@@ -16,6 +16,8 @@ import { DeptModule } from './module/system/dept/dept.module';
 import { LoginlogModule } from './module/monitor/loginlog/loginlog.module';
 import { RedisClientOptions } from '@liaoliaots/nestjs-redis';
 import { RedisModule } from './module/redis/redis.module';
+import { AuthModule } from './module/system/auth/auth.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Global()
 @Module({
@@ -58,6 +60,8 @@ import { RedisModule } from './module/redis/redis.module';
       true,
     ),
     // 模块
+    HttpModule,
+    AuthModule,
     UserModule,
     MainModule,
     AxiosModule,

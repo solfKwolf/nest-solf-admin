@@ -45,7 +45,7 @@ db:
 # redis 配置
 redis:
   host: 'localhost'
-  password: '123456'
+  password: 'wojiushiSB'
   port: 6379
   db: 0
   keyPrefix: 'nest:'
